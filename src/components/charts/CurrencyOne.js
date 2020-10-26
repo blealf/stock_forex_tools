@@ -70,8 +70,6 @@ const CurrencyOne = React.memo(() => {
   const [currencyValue, setCurrencyValue ] = useState([]);
   
 
-  
-  
   useEffect(() => {
     if(data && data.length !== 0) {
       setMetaData([]);
