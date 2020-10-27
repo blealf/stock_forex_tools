@@ -60,8 +60,9 @@ const ChangeBaseCurrency = styled.button`
 
 
 const CurrencyOne = React.memo(() => {
-  const [baseCurrency, setBaseCurrency] = useState("EUR");
-  const url = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}&symbols=USD,GBP,CAD,CNY,AUD,NZD,CHF,BGN,TRY`;
+  const [baseCurrency, setBaseCurrency] = useState("USD");
+  // const url = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}&symbols=USD,GBP,CAD,AUD,NZD,CHF,JPY`;
+  const url = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}&symbols=GBP,CAD,AUD,CHF,EUR`;
   // const url = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}`
 
   const { data, loading, error } = useFetch(url);
@@ -84,6 +85,7 @@ const CurrencyOne = React.memo(() => {
       for (let i in data["rates"]){
         setCurrencyName(currencyName => [...currencyName, i])
         setCurrencyValue(currencyValue => [...currencyValue, data["rates"][i]])
+        console.log(currencyName + ": " + currencyValue)
       }
     }
   }, [baseCurrency, data]);
@@ -127,7 +129,7 @@ const CurrencyOne = React.memo(() => {
       <MetaData>
         <h2>MetaData</h2>
         {
-          metaData.map(mData => (<MetaDataItem key={mData}>{mData}</MetaDataItem>))
+          metaData.map(mData => (<MetaDataItem key={mData}>{mData.toUpperCase()}</MetaDataItem>))
         }
       </MetaData>
       <CurrencyHeader>
@@ -147,7 +149,18 @@ const CurrencyOne = React.memo(() => {
                 display: true,
                 text: `Currencies Against the ${baseCurrency}`
               }
-            }}
+            },
+            { scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  // max: 500,
+                  min: 0,
+                  // stepSize: 1
+                }
+              }]
+          }}
+          }
           />
         </Chart>
       </ChartWrapper>

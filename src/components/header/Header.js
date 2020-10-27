@@ -39,6 +39,7 @@ const MenuButton = styled.div`
     float: right;
     margin-right: 10px;
     background: ${altBg};
+    color: ${mainBg};
     outline: none;
     cursor: pointer;
     width: 70px;
